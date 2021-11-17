@@ -109,7 +109,11 @@ public final class SaveFile extends UseCase<FileData> {
       return FileData.exceededMaximumFileSize(fileData);
     }
 
-    InputStream inputStream = new BufferedInputStream(new FileInputStream(source));
+    Context context = targetUi.getContext();
+
+    Uri fileUri = Uri.fromFile(source);
+
+    InputStream inputStream = new BufferedInputStream(context.getContentResolver().openInputStream(fileUri));
     File destination = getOutputFile();
     imageUtils.copy(inputStream, destination);
 
